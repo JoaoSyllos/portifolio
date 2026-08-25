@@ -1,0 +1,38 @@
+:root {
+  --background-1: #000;
+  --background-2: #06060e;
+  --foreground: #ededed;
+  --muted: #8a8a8a;
+  --border: #232323;
+  --surface: #101010;
+  --accent: #ff4d1f;
+  --accent-hover: #ff4c1f31;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  position: relative;
+  color: var(--foreground);
+  background: var(--background-1);
+  font-family: var(--font-manrope), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
