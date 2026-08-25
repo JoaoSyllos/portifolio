@@ -20,7 +20,7 @@
   will-change: left, top;
 }
 
-@media (pointer: coarse), (max-width: 768px) {
+@media (hover: none) and (pointer: coarse), (max-width: 768px) {
   .glow {
     display: none;
   }

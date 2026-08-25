@@ -86,7 +86,7 @@ export default function NeedleField() {
     if (!canvas) return;
 
     const isTouchOrSmall = window.matchMedia(
-      "(pointer: coarse), (max-width: 768px)",
+      "(hover: none) and (pointer: coarse), (max-width: 768px)",
     ).matches;
     if (isTouchOrSmall) return;
 

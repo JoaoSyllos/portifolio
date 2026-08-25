@@ -12,19 +12,21 @@
 html,
 body {
   height: 100%;
+  background: var(--background-1);
+  overscroll-behavior-y: none;
 }
 
 body {
   position: relative;
+  isolation: isolate;
   color: var(--foreground);
-  background: var(--background-1);
   font-family: var(--font-manrope), Arial, Helvetica, sans-serif;
   overflow-x: hidden;
 }
 
 /* Fallback estático para quando o shader/glow animado é desligado
    (dispositivos touch e telas pequenas), evitando um fundo chapado. */
-@media (pointer: coarse), (max-width: 768px) {
+@media (hover: none) and (pointer: coarse), (max-width: 768px) {
   body {
     background:
       radial-gradient(circle at 50% 0%, rgba(255, 77, 31, 0.1), transparent 55%),
