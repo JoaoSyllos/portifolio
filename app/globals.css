@@ -22,6 +22,17 @@ body {
   overflow-x: hidden;
 }
 
+/* Fallback estático para quando o shader/glow animado é desligado
+   (dispositivos touch e telas pequenas), evitando um fundo chapado. */
+@media (pointer: coarse), (max-width: 768px) {
+  body {
+    background:
+      radial-gradient(circle at 50% 0%, rgba(255, 77, 31, 0.1), transparent 55%),
+      radial-gradient(circle at 50% 100%, var(--background-2), var(--background-1) 65%);
+    background-attachment: fixed;
+  }
+}
+
 * {
   box-sizing: border-box;
   padding: 0;

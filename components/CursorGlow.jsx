@@ -13,6 +13,11 @@ export default function CursorGlow() {
     const glow = glowRef.current;
     if (!glow) return;
 
+    const isTouchOrSmall = window.matchMedia(
+      "(pointer: coarse), (max-width: 768px)",
+    ).matches;
+    if (isTouchOrSmall) return;
+
     function handleMove(event) {
       target.current.x = event.clientX;
       target.current.y = event.clientY;

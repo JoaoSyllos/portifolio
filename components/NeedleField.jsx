@@ -85,6 +85,11 @@ export default function NeedleField() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    const isTouchOrSmall = window.matchMedia(
+      "(pointer: coarse), (max-width: 768px)",
+    ).matches;
+    if (isTouchOrSmall) return;
+
     const gl = canvas.getContext("webgl", {
       alpha: true,
       antialias: false,
