@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portifolio
 
-## Getting Started
+Site estático em HTML + CSS + JavaScript puro. Sem framework, sem build step,
+sem dependências instaladas.
 
-First, run the development server:
+## Rodar
+
+Precisa ser servido por HTTP — abrir o `index.html` direto pelo `file://`
+quebra o WebGL. Qualquer servidor estático serve:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npx serve .
+# ou
+python -m http.server 8000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+No VS Code, a extensão Live Server também funciona (já configurada na porta
+5501 em `.vscode/settings.json`).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Arquivos
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+index.html      markup das três seções (hero, skills, projects)
+style.css       tema, reset e estilo de todas as seções
+background.js   fundo do site: shader de agulhas + brilho do cursor
+animations.js   animações de conteúdo: entrada do hero + scroll do skills
+favicon.ico
+```
 
-## Learn More
+O GSAP (core + ScrollTrigger + ScrollSmoother, v3.15.0) vem de CDN, carregado
+no `index.html` antes dos dois scripts.
 
-To learn more about Next.js, take a look at the following resources:
+## background.js — fundo do site
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Puramente reativo ao cursor, sem relação com scroll (só usa `gsap` core, não
+ScrollTrigger/ScrollSmoother):
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **needle field** — campo de agulhas em WebGL que aponta para o cursor
+- **cursor glow** — brilho azulado seguindo o cursor com atraso suave
 
-## Deploy on Vercel
+## animations.js — animações de conteúdo
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Dependem de scroll (ScrollTrigger/ScrollSmoother):
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **hero** — entrada em cascata dos elementos do topo
+- **skills** — o `.c1` fica pinado e "flutua" só enquanto o site desce; ao sair
+  da seção, força o scroll até o `.c2`
+
+Em ambos os arquivos, as animações pesadas (shader, glow, pin do skills) ficam
+desligadas em touch/telas pequenas e com `prefers-reduced-motion: reduce`,
+com um gradiente estático de fallback no fundo.
