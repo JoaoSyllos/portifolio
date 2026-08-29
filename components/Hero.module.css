@@ -34,6 +34,8 @@
   background: var(--surface);
   font-size: clamp(12px, 0.7vw + 10px, 13px);
   color: var(--muted);
+  opacity: 0;
+  filter: blur(14px);
 }
 
 .badgeDot {
@@ -41,6 +43,7 @@
   height: 6px;
   border-radius: 50%;
   background: var(--accent);
+  animation: badgePulse 2.4s ease-in-out 0.7s infinite;
 }
 
 .title {
@@ -48,6 +51,8 @@
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: clamp(-1.5px, -0.15vw, -1px);
+  opacity: 0;
+  filter: blur(14px);
 }
 
 .highlight {
@@ -60,6 +65,8 @@
   font-size: clamp(16px, 0.4vw + 15px, 18px);
   line-height: 1.6;
   color: var(--muted);
+  opacity: 0;
+  filter: blur(14px);
 }
 
 .actions {
@@ -67,6 +74,8 @@
   flex-wrap: wrap;
   gap: clamp(12px, 2vw, 16px);
   margin-top: clamp(32px, 4vw, 40px);
+  opacity: 0;
+  filter: blur(14px);
 }
 
 .primary,
@@ -74,6 +83,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   padding: 14px clamp(24px, 4vw, 32px);
   border-radius: 12px;
   font-weight: 700;
@@ -89,6 +99,14 @@
 .primary:hover {
   box-shadow: 0px 8px 8px var(--accent-hover);
   transform: translateY(-2px);
+}
+
+.primaryIcon {
+  transition: transform 0.2s ease;
+}
+
+.primary:hover .primaryIcon {
+  transform: translateX(3px);
 }
 
 .secondary {
@@ -110,6 +128,8 @@
   gap: 8px;
   font-size: clamp(13px, 0.4vw + 12px, 14px);
   color: var(--muted);
+  opacity: 0;
+  filter: blur(14px);
 }
 
 .githubLink {
@@ -123,7 +143,19 @@
   text-decoration: underline;
 }
 
-@media (max-width: 600px) {
+@keyframes badgePulse {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 var(--accent-hover);
+  }
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 0 4px var(--accent-hover);
+  }
+}
+
+@media (max-width: 768px) {
   .actions {
     flex-direction: column;
     width: 100%;
@@ -132,5 +164,26 @@
   .primary,
   .secondary {
     width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .badge,
+  .title,
+  .description,
+  .actions,
+  .labelLink {
+    opacity: 1;
+    filter: none;
+  }
+
+  .badgeDot {
+    animation: none;
+  }
+
+  .primaryIcon,
+  .primary,
+  .secondary {
+    transition: none;
   }
 }

@@ -1,0 +1,15 @@
+.needle-field {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  z-index: -2;
+}
+
+@media (hover: none) and (pointer: coarse), (max-width: 768px) {
+  .needle-field {
+    display: none;
+  }
+}

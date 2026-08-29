@@ -1,6 +1,7 @@
 import { Manrope } from "next/font/google";
 import CursorGlow from "@/components/CursorGlow";
 import NeedleField from "@/components/NeedleField";
+import SmoothScroller from "@/components/SmoothScroller";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -19,7 +20,7 @@ export default function RootLayout({ children }) {
       <body className={manrope.variable} suppressHydrationWarning>
         <NeedleField />
         <CursorGlow />
-        {children}
+        <SmoothScroller>{children}</SmoothScroller>
       </body>
     </html>
   );

@@ -1,55 +1,51 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
 import styles from "./CursorGlow.module.css";
 
 export default function CursorGlow() {
   const glowRef = useRef(null);
-  const target = useRef({ x: 0, y: 0 });
-  const current = useRef({ x: 0, y: 0 });
-  const initialized = useRef(false);
 
   useEffect(() => {
     const glow = glowRef.current;
     if (!glow) return;
 
-    const isTouchOrSmall = window.matchMedia(
-      "(hover: none) and (pointer: coarse), (max-width: 768px)",
-    ).matches;
-    if (isTouchOrSmall) return;
+    const mm = gsap.matchMedia();
 
-    function handleMove(event) {
-      target.current.x = event.clientX;
-      target.current.y = event.clientY;
+    mm.add(
+      "(hover: hover) and (pointer: fine) and (min-width: 769px) and (prefers-reduced-motion: no-preference)",
+      () => {
+        gsap.set(glow, {
+          xPercent: -50,
+          yPercent: -50,
+          x: window.innerWidth / 2,
+          y: window.innerHeight / 2,
+        });
 
-      if (!initialized.current) {
-        current.current.x = event.clientX;
-        current.current.y = event.clientY;
-        initialized.current = true;
+        const xTo = gsap.quickTo(glow, "x", { duration: 0.9, ease: "power3" });
+        const yTo = gsap.quickTo(glow, "y", { duration: 0.9, ease: "power3" });
+
+        let initialized = false;
+
+        function handleMove(event) {
+          if (!initialized) {
+            gsap.set(glow, { x: event.clientX, y: event.clientY });
+            initialized = true;
+            return;
+          }
+
+          xTo(event.clientX);
+          yTo(event.clientY);
+        }
+
+        window.addEventListener("pointermove", handleMove);
+
+        return () => window.removeEventListener("pointermove", handleMove);
       }
-    }
+    );
 
-    window.addEventListener("pointermove", handleMove);
-
-    const ease = 0.06;
-    let frameId;
-
-    function animate() {
-      current.current.x += (target.current.x - current.current.x) * ease;
-      current.current.y += (target.current.y - current.current.y) * ease;
-
-      glow.style.left = `${current.current.x}px`;
-      glow.style.top = `${current.current.y}px`;
-
-      frameId = requestAnimationFrame(animate);
-    }
-
-    frameId = requestAnimationFrame(animate);
-
-    return () => {
-      window.removeEventListener("pointermove", handleMove);
-      cancelAnimationFrame(frameId);
-    };
+    return () => mm.revert();
   }, []);
 
   return <div ref={glowRef} className={styles.glow} />;

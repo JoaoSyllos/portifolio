@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
 import styles from "./NeedleField.module.css";
 
-const SPACING = 34; // distância entre agulhas, em px de CSS
-const EASE = 0.08;
+const SPACING = 20; // distância entre agulhas, em px de CSS
 
 const VERTEX_SHADER = `
 attribute vec2 aPos;
@@ -44,15 +44,15 @@ void main() {
   float t = clamp((local.x + len) / (2.0 * len), 0.0, 1.0);
   float w = thick * mix(1.0, 0.06, t * t);
   float sd = max(abs(local.y) - w, max(-local.x - len, local.x - len));
-  float shape = 1.0 - smoothstep(-1.0, 1.0, sd);
+  float shape = 1.0 - smoothstep(-2.0, 2.0, sd);
 
   // Agulhas perto do cursor acendem na cor de destaque.
-  float prox = exp(-dist / (uSpacing * 10.0));
+  float prox = exp(-dist / (uSpacing * 13.0));
   // Some com as que ficam debaixo do cursor, onde a direção vira ruído.
   float core = smoothstep(0.0, uSpacing * 0.9, dist);
 
-  vec3 color = mix(uBase, uAccent, prox);
-  float alpha = shape * core * (0.20 + 1.05 * prox);
+  vec3 color = mix(uBase, uAccent, prox * 0.6);
+  float alpha = shape * core * (0.16 + 0.9 * prox);
 
   gl_FragColor = vec4(color, clamp(alpha, 0.0, 1.0));
 }
@@ -85,118 +85,108 @@ export default function NeedleField() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const isTouchOrSmall = window.matchMedia(
-      "(hover: none) and (pointer: coarse), (max-width: 768px)",
-    ).matches;
-    if (isTouchOrSmall) return;
+    const mm = gsap.matchMedia();
 
-    const gl = canvas.getContext("webgl", {
-      alpha: true,
-      antialias: false,
-      premultipliedAlpha: false,
-    });
-    if (!gl) return;
+    mm.add(
+      "(hover: hover) and (pointer: fine) and (min-width: 769px) and (prefers-reduced-motion: no-preference)",
+      () => {
+        const gl = canvas.getContext("webgl", {
+          alpha: true,
+          antialias: false,
+          premultipliedAlpha: false,
+        });
+        if (!gl) return;
 
-    const vertex = compile(gl, gl.VERTEX_SHADER, VERTEX_SHADER);
-    const fragment = compile(gl, gl.FRAGMENT_SHADER, FRAGMENT_SHADER);
-    if (!vertex || !fragment) return;
+        const vertex = compile(gl, gl.VERTEX_SHADER, VERTEX_SHADER);
+        const fragment = compile(gl, gl.FRAGMENT_SHADER, FRAGMENT_SHADER);
+        if (!vertex || !fragment) return;
 
-    const program = gl.createProgram();
-    gl.attachShader(program, vertex);
-    gl.attachShader(program, fragment);
-    gl.linkProgram(program);
+        const program = gl.createProgram();
+        gl.attachShader(program, vertex);
+        gl.attachShader(program, fragment);
+        gl.linkProgram(program);
 
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
 
-    gl.useProgram(program);
+        gl.useProgram(program);
 
-    // Triângulo único cobrindo a tela inteira.
-    const buffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Float32Array([-1, -1, 3, -1, -1, 3]),
-      gl.STATIC_DRAW,
-    );
+        // Triângulo único cobrindo a tela inteira.
+        const buffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+        gl.bufferData(
+          gl.ARRAY_BUFFER,
+          new Float32Array([-1, -1, 3, -1, -1, 3]),
+          gl.STATIC_DRAW,
+        );
 
-    const aPos = gl.getAttribLocation(program, "aPos");
-    gl.enableVertexAttribArray(aPos);
-    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+        const aPos = gl.getAttribLocation(program, "aPos");
+        gl.enableVertexAttribArray(aPos);
+        gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
 
-    const uMouse = gl.getUniformLocation(program, "uMouse");
-    const uSpacing = gl.getUniformLocation(program, "uSpacing");
+        const uMouse = gl.getUniformLocation(program, "uMouse");
+        const uSpacing = gl.getUniformLocation(program, "uSpacing");
 
-    const theme = getComputedStyle(document.documentElement);
-    gl.uniform3fv(
-      gl.getUniformLocation(program, "uBase"),
-      hexToRgb(theme.getPropertyValue("--muted"), [0.54, 0.54, 0.54]),
-    );
-    gl.uniform3fv(
-      gl.getUniformLocation(program, "uAccent"),
-      hexToRgb(theme.getPropertyValue("--accent"), [1, 0.3, 0.12]),
-    );
+        const theme = getComputedStyle(document.documentElement);
+        gl.uniform3fv(
+          gl.getUniformLocation(program, "uBase"),
+          hexToRgb(theme.getPropertyValue("--muted"), [0.54, 0.54, 0.54]),
+        );
+        gl.uniform3fv(
+          gl.getUniformLocation(program, "uAccent"),
+          hexToRgb(theme.getPropertyValue("--accent"), [1, 0.3, 0.12]),
+        );
 
-    gl.enable(gl.BLEND);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-    gl.clearColor(0, 0, 0, 0);
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+        gl.clearColor(0, 0, 0, 0);
 
-    const target = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    const current = { ...target };
-    let dpr = 1;
+        const current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+        let dpr = 1;
 
-    function draw() {
-      gl.clear(gl.COLOR_BUFFER_BIT);
-      // gl_FragCoord tem origem embaixo à esquerda; o ponteiro, em cima.
-      gl.uniform2f(uMouse, current.x * dpr, canvas.height - current.y * dpr);
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
-    }
+        function draw() {
+          gl.clear(gl.COLOR_BUFFER_BIT);
+          // gl_FragCoord tem origem embaixo à esquerda; o ponteiro, em cima.
+          gl.uniform2f(uMouse, current.x * dpr, canvas.height - current.y * dpr);
+          gl.drawArrays(gl.TRIANGLES, 0, 3);
+        }
 
-    function resize() {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.floor(window.innerWidth * dpr);
-      canvas.height = Math.floor(window.innerHeight * dpr);
+        function resize() {
+          dpr = Math.min(window.devicePixelRatio || 1, 2);
+          canvas.width = Math.floor(window.innerWidth * dpr);
+          canvas.height = Math.floor(window.innerHeight * dpr);
 
-      gl.viewport(0, 0, canvas.width, canvas.height);
-      gl.uniform1f(uSpacing, SPACING * dpr);
-      draw();
-    }
+          gl.viewport(0, 0, canvas.width, canvas.height);
+          gl.uniform1f(uSpacing, SPACING * dpr);
+          draw();
+        }
 
-    let frameId = 0;
+        // quickTo anima `current` até a posição do cursor a cada movimento;
+        // o próprio ticker do GSAP cuida do passo por frame (independente de FPS)
+        // e para de chamar onUpdate assim que a agulha alcança o alvo.
+        const xTo = gsap.quickTo(current, "x", { duration: 0.5, ease: "power3", onUpdate: draw });
+        const yTo = gsap.quickTo(current, "y", { duration: 0.5, ease: "power3", onUpdate: draw });
 
-    function loop() {
-      const dx = target.x - current.x;
-      const dy = target.y - current.y;
+        function handleMove(event) {
+          xTo(event.clientX);
+          yTo(event.clientY);
+        }
 
-      current.x += dx * EASE;
-      current.y += dy * EASE;
-      draw();
+        resize();
 
-      // Para de desenhar quando as agulhas já alcançaram o cursor.
-      if (Math.abs(dx) < 0.3 && Math.abs(dy) < 0.3) {
-        frameId = 0;
-        return;
+        window.addEventListener("pointermove", handleMove);
+        window.addEventListener("resize", resize);
+
+        return () => {
+          window.removeEventListener("pointermove", handleMove);
+          window.removeEventListener("resize", resize);
+        };
       }
+    );
 
-      frameId = requestAnimationFrame(loop);
-    }
-
-    function handleMove(event) {
-      target.x = event.clientX;
-      target.y = event.clientY;
-      if (!frameId) frameId = requestAnimationFrame(loop);
-    }
-
-    resize();
-
-    window.addEventListener("pointermove", handleMove);
-    window.addEventListener("resize", resize);
-
-    return () => {
-      window.removeEventListener("pointermove", handleMove);
-      window.removeEventListener("resize", resize);
-      if (frameId) cancelAnimationFrame(frameId);
-    };
+    return () => mm.revert();
   }, []);
 
-  return <canvas ref={canvasRef} className={styles.canvas} aria-hidden="true" />;
+  return (
+    <canvas ref={canvasRef} className={styles.canvas} aria-hidden="true" />
+  );
 }

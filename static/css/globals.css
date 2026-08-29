@@ -1,0 +1,59 @@
+:root {
+  --background-1: #000;
+  --background-2: #06060e;
+  --foreground: #ededed;
+  --muted: #8a8a8a;
+  --border: #232323;
+  --surface: #101010;
+  --accent: #ff4d1f;
+  --accent-hover: #ff4c1f31;
+
+  --font-manrope: "Manrope";
+}
+
+html,
+body {
+  height: 100%;
+  background: var(--background-1);
+  overscroll-behavior-y: none;
+}
+
+body {
+  position: relative;
+  isolation: isolate;
+  color: var(--foreground);
+  font-family: var(--font-manrope), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Fallback estático para quando o shader/glow animado é desligado
+   (dispositivos touch e telas pequenas), evitando um fundo chapado. */
+@media (hover: none) and (pointer: coarse), (max-width: 768px) {
+  body {
+    background:
+      radial-gradient(circle at 50% 0%, rgba(255, 77, 31, 0.1), transparent 55%),
+      radial-gradient(circle at 50% 100%, var(--background-2), var(--background-1) 65%);
+    background-attachment: fixed;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+.main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
