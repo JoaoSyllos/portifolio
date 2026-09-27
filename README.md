@@ -1,7 +1,9 @@
 # Portifolio
 
-Site estático em HTML + CSS + JavaScript puro. Sem framework, sem build step,
-sem dependências instaladas.
+Site estático em HTML + CSS puro, com uma única animação em GSAP: o fundo
+(shader de agulhas em WebGL + brilho do cursor). O resto do conteúdo (hero,
+skills, projects) é estático de propósito, pronto pra receber animações
+próprias.
 
 ## Rodar
 
@@ -23,29 +25,24 @@ No VS Code, a extensão Live Server também funciona (já configurada na porta
 index.html      markup das três seções (hero, skills, projects)
 style.css       tema, reset e estilo de todas as seções
 background.js   fundo do site: shader de agulhas + brilho do cursor
-animations.js   animações de conteúdo: entrada do hero + scroll do skills
 favicon.ico
 ```
 
-O GSAP (core + ScrollTrigger + ScrollSmoother, v3.15.0) vem de CDN, carregado
-no `index.html` antes dos dois scripts.
+O GSAP (só o core, v3.15.0) vem de CDN, carregado no `index.html` antes do
+`background.js`. `ScrollTrigger`/`ScrollSmoother` não são usados — o fundo é
+puramente reativo ao cursor, sem relação com scroll.
 
-## background.js — fundo do site
+O shader/glow fica desligado em touch/telas pequenas e com
+`prefers-reduced-motion: reduce`, com um gradiente estático de fallback no
+lugar.
 
-Puramente reativo ao cursor, sem relação com scroll (só usa `gsap` core, não
-ScrollTrigger/ScrollSmoother):
+## Estado atual
 
-- **needle field** — campo de agulhas em WebGL que aponta para o cursor
-- **cursor glow** — brilho azulado seguindo o cursor com atraso suave
+Hero, skills e projects estão sem nenhuma animação — todo o conteúdo já
+aparece visível, sem JavaScript envolvido. Os atributos `data-hero-item` e os
+ids `skills-contents` / `skills-c1` / `skills-c2` continuam no markup como
+ganchos prontos, caso sirvam de ponto de partida pra próxima animação.
 
-## animations.js — animações de conteúdo
-
-Dependem de scroll (ScrollTrigger/ScrollSmoother):
-
-- **hero** — entrada em cascata dos elementos do topo
-- **skills** — o `.c1` fica pinado e "flutua" só enquanto o site desce; ao sair
-  da seção, força o scroll até o `.c2`
-
-Em ambos os arquivos, as animações pesadas (shader, glow, pin do skills) ficam
-desligadas em touch/telas pequenas e com `prefers-reduced-motion: reduce`,
-com um gradiente estático de fallback no fundo.
+Uma versão anterior tinha animações em GSAP também no hero (entrada em
+cascata) e na seção skills (scroll-jack). Esse histórico continua no git, no
+commit `7ea4fcb`, caso valha a pena consultar como referência.

@@ -3,14 +3,18 @@
    ========================================================================== */
 
 :root {
-  --background-1: #000;
-  --background-2: #06060e;
-  --foreground: #ededed;
-  --muted: #8a8a8a;
-  --border: #232323;
-  --surface: #101010;
+  --background-1: #ffffff;
+  --background-2: #f4f4f7;
+  --foreground: #131313;
+  --muted: #6b6b6b;
+  --border: #e2e2e2;
+  --surface: #f6f6f6;
   --accent: #ff4d1f;
   --accent-hover: #ff4c1f31;
+  /* Versão mais escura do accent, usada em texto pequeno: o laranja puro
+     (#ff4d1f) só atinge ~3.3:1 de contraste sobre branco, abaixo dos 4.5:1
+     exigidos pra texto normal (WCAG AA). Essa variante fica em ~5:1. */
+  --accent-text: #c1440e;
 
   --font-manrope: "Manrope";
 }
@@ -24,13 +28,23 @@
 html,
 body {
   height: 100%;
-  background: var(--background-1);
   overscroll-behavior-y: none;
+}
+
+html {
+  overflow-y: scroll; /* ou auto */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge antigo */
+}
+
+html::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge novo */
 }
 
 body {
   position: relative;
   isolation: isolate;
+  background: var(--background-1);
   color: var(--foreground);
   font-family: var(--font-manrope), Arial, Helvetica, sans-serif;
   overflow-x: hidden;
@@ -45,6 +59,13 @@ button {
   font: inherit;
 }
 
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
 .main {
   display: flex;
   flex: 1;
@@ -56,8 +77,16 @@ button {
 @media (hover: none) and (pointer: coarse), (max-width: 768px) {
   body {
     background:
-      radial-gradient(circle at 50% 0%, rgba(255, 77, 31, 0.1), transparent 55%),
-      radial-gradient(circle at 50% 100%, var(--background-2), var(--background-1) 65%);
+      radial-gradient(
+        circle at 50% 0%,
+        rgba(255, 77, 31, 0.1),
+        transparent 55%
+      ),
+      radial-gradient(
+        circle at 50% 100%,
+        var(--background-2),
+        var(--background-1) 65%
+      );
     background-attachment: fixed;
   }
 }
@@ -91,7 +120,7 @@ button {
   );
   filter: blur(190px);
   opacity: 0.7;
-  mix-blend-mode: screen;
+  mix-blend-mode: multiply;
   pointer-events: none;
   z-index: -1;
   will-change: transform;
@@ -131,17 +160,6 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-/* Os itens marcados com [data-hero-item] entram animados pelo GSAP, por isso
-   começam invisíveis. Ver o <noscript> no index.html para o caso sem JS. */
-.hero-badge,
-.hero-title,
-.hero-description,
-.hero-actions,
-.hero-label-link {
-  opacity: 0;
-  filter: blur(14px);
 }
 
 .hero-badge {
@@ -231,7 +249,7 @@ button {
 .hero-secondary:hover {
   background: var(--surface);
   border: 1px solid var(--accent);
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .hero-label-link {
@@ -244,7 +262,7 @@ button {
 }
 
 .hero-github-link {
-  color: var(--accent);
+  color: var(--accent-text);
   font-weight: 600;
   transition: color 0.2s ease;
 }
@@ -277,6 +295,18 @@ button {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .hero-badge-dot {
+    animation: none;
+  }
+
+  .hero-primary-icon,
+  .hero-primary,
+  .hero-secondary {
+    transition: none;
+  }
+}
+
 /* ==========================================================================
    Skills
    ========================================================================== */
@@ -290,7 +320,7 @@ button {
 
 .skills-contents {
   width: min(90%, 900px);
-  margin: 0 auto;
+  margin: clamp(80px, 20vw, 200px) auto;
   display: flex;
   flex-direction: column;
   gap: clamp(140px, 22vw, 260px);
@@ -319,8 +349,7 @@ button {
   max-width: 52ch;
 }
 
-@media (hover: none) and (pointer: coarse), (max-width: 768px),
-  (prefers-reduced-motion: reduce) {
+@media (max-width: 768px) {
   .skills-contents {
     gap: clamp(48px, 10vw, 72px);
   }
@@ -339,29 +368,4 @@ button {
   display: flex;
   width: 100%;
   height: 2000px;
-}
-
-/* ==========================================================================
-   Movimento reduzido
-   ========================================================================== */
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-badge,
-  .hero-title,
-  .hero-description,
-  .hero-actions,
-  .hero-label-link {
-    opacity: 1;
-    filter: none;
-  }
-
-  .hero-badge-dot {
-    animation: none;
-  }
-
-  .hero-primary-icon,
-  .hero-primary,
-  .hero-secondary {
-    transition: none;
-  }
 }
