@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  @font-face { font-family: 'Placeholder'; src: local('Arial'); }
+  body { margin: 0; background: #13293D; cursor: none; }
+  ::selection { background: #DCF763; color: #13293D; }
+  @keyframes blink { 0%,50% { opacity: 1; } 51%,100% { opacity: 0; } }
+  @media (max-width: 900px) { body { cursor: auto; } }
+</style>
+</helmet>
+<div ref="{{ stageRef }}" onMouseMove="{{ onMouseMove }}" style="position:relative; min-height:100vh; background:#13293D; color:#DCF763; font-family:'SF Mono','JetBrains Mono',Consolas,monospace; overflow:hidden;">
+
+  
+
+  <nav style="position:sticky; top:0; z-index:50; display:flex; justify-content:space-between; align-items:center; padding:28px 5vw; background:linear-gradient(180deg, rgba(19,41,61,0.95), rgba(19,41,61,0));">
+    <div style="font-weight:800; font-size:18px; letter-spacing:0.05em; color:#DCF763;">DEV.</div>
+    <div style="display:flex; gap:32px; font-size:13px; letter-spacing:0.1em; text-transform:uppercase; color:#3E92CC;">
+      <a href="#projetos" style="color:#3E92CC; text-decoration:none;" onMouseEnter="{{ growCursor }}" onMouseLeave="{{ shrinkCursor }}">Projetos</a>
+      <a href="#skills" style="color:#3E92CC; text-decoration:none;" onMouseEnter="{{ growCursor }}" onMouseLeave="{{ shrinkCursor }}">Skills</a>
+      <a href="#contato" style="color:#3E92CC; text-decoration:none;" onMouseEnter="{{ growCursor }}" onMouseLeave="{{ shrinkCursor }}">Contato</a>
+    </div>
+  </nav>
+
+  <section style="position:relative; min-height:92vh; display:grid; grid-template-columns:repeat(12,1fr); align-items:end; align-content:center; padding:90px 5vw 80px; background-image:linear-gradient(rgba(62,146,204,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(62,146,204,0.07) 1px, transparent 1px); background-size:80px 80px; background-position:-1px -1px;">
+    <div style="position:absolute; inset:0; pointer-events:none; z-index:1;">      <div style="position:absolute; bottom:20px; left:5vw; width:18px; height:18px; pointer-events:none;"><div style="position:absolute; left:8px; top:0; width:2px; height:18px; background:#3E92CC;"></div><div style="position:absolute; top:8px; left:0; width:18px; height:2px; background:#3E92CC;"></div></div>
+      <div style="position:absolute; bottom:20px; right:5vw; width:18px; height:18px; pointer-events:none;"><div style="position:absolute; left:8px; top:0; width:2px; height:18px; background:#3E92CC;"></div><div style="position:absolute; top:8px; left:0; width:18px; height:2px; background:#3E92CC;"></div></div><div style="position: absolute; width: 18px; height: 18px; pointer-events: none; left: 472px; top: 68px"></div>
+      <div style="position:absolute; bottom:24px; right:calc(5vw + 30px); font-size:11px; letter-spacing:0.2em; color:#3E92CC;">BUILD 2026.10</div>
+      <div style="position:absolute; left:1.2vw; top:50%; transform:translateY(-50%) rotate(180deg); writing-mode:vertical-rl; font-size:11px; letter-spacing:0.4em; color:#3E92CC; white-space:nowrap;">ESCRITO À MÃO — LINHA POR LINHA</div>
+      <div style="position:absolute; left:-90px; bottom:-90px; width:260px; height:260px; border-radius:50%; border:2px solid #3E92CC; opacity:0.5;"></div>
+    <div style="position: absolute; width: 18px; height: 18px; pointer-events: none; left: 55px; top: 45px"><div style="position:absolute; left:8px; top:0; width:2px; height:18px; background:#3E92CC;"></div><div style="position:absolute; top:8px; left:0; width:18px; height:2px; background:#3E92CC;"></div></div></div>
+    <div style="grid-column:1/9; z-index:2;">
+      <div style="display:flex; align-items:center; gap:14px; margin-bottom:24px;">
+        <span style="font-size:14px; letter-spacing:0.25em; color:#3E92CC; text-transform:uppercase;">DESENVOLVO</span>
+      </div>
+      <h1 style="margin:0; font-size:clamp(56px, 11vw, 168px); line-height:0.92; font-weight:900; letter-spacing:-0.02em; color:#DCF763;">
+        CÓDIGO<br>
+        <span style="color:#3E92CC;">PENSADO,</span><br>
+        NÃO GERADO<span style="animation:blink 1s step-end infinite; color:#DCF763;">_</span>
+      </h1>
+    </div>
+    <div style="grid-column:9/13; justify-self:end; align-self:end; z-index:2; max-width:300px; text-align:right; padding-bottom:12px;">
+      <p style="font-size:16px; line-height:1.6; color:#DCF763; opacity:0.85; margin:0 0 20px;">Eu escrevo cada linha, desenho a arquitetura e reviso os detalhes antes de publicar.</p>
+      <a href="#projetos" style="display:inline-block; padding:12px 22px; border:1px solid #3E92CC; color:#3E92CC; text-decoration:none; font-size:13px; letter-spacing:0.1em; text-transform:uppercase;" onMouseEnter="{{ growCursor }}" onMouseLeave="{{ shrinkCursor }}">Ver projetos ↓</a>
+    </div>
+  </section>
+
+  <section id="projetos" style="position:relative; padding:120px 5vw 180px; border-top:1px solid rgba(62,146,204,0.25);">
+    <div style="display:flex; align-items:baseline; gap:20px; margin-bottom:16px;">
+      
+      <h2 style="margin:0; font-size:clamp(32px,5vw,64px); font-weight:900; color:#DCF763;">PROJETOS</h2>
+    </div>
+    <div style="display:flex; flex-direction:column; margin-top:60px; border-top:1px solid rgba(62,146,204,0.35);">
+      <sc-for list="{{ projects }}" as="p" hint-placeholder-count="4">
+        <a href="#" onMouseEnter="{{ growCursor }}" onMouseLeave="{{ shrinkCursor }}" style="display:grid; grid-template-columns:60px minmax(0,1fr) minmax(0,1.2fr) 40px; gap:32px; align-items:center; padding:40px 0; border-bottom:1px solid rgba(62,146,204,0.35); color:#DCF763; text-decoration:none; transition:padding .25s, background .25s;" style-hover="padding-left:24px; background:rgba(62,146,204,0.08);">
+          <div style="font-size:14px; color:#3E92CC; letter-spacing:0.2em;">0{{ p.num }}</div>
+          <div>
+            <div style="font-size:clamp(28px,4vw,52px); font-weight:900; line-height:1;">{{ p.title }}</div>
+            <div style="margin-top:12px; font-size:12px; letter-spacing:0.15em; color:#3E92CC;">{{ p.stack }}</div>
+          </div>
+          <div style="font-size:16px; line-height:1.6; opacity:0.85; text-wrap:pretty;">{{ p.desc }}</div>
+          <div style="font-size:32px; justify-self:end;">↗</div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="skills" style="position:relative; padding:100px 5vw 140px; border-top:1px solid rgba(62,146,204,0.25); background:#0f2131;">
+    <div style="display:flex; align-items:baseline; gap:20px; margin-bottom:50px;">
+      
+      <h2 style="margin:0; font-size:clamp(32px,5vw,64px); font-weight:900; color:#DCF763;">SKILLS</h2>
+    </div>
+    <div style="display:flex; flex-wrap:wrap; gap:12px; max-width:1000px;">
+      <sc-for list="{{ skills }}" as="s" hint-placeholder-count="8">
+        <div onMouseEnter="{{ growCursor }}" onMouseLeave="{{ shrinkCursor }}" style="display:flex; align-items:center; gap:12px; padding:14px 22px; border:1px solid rgba(62,146,204,0.6); border-radius:999px; color:#DCF763; font-size:17px; font-weight:600; transition:background .2s, color .2s, border-color .2s;" style-hover="background:#DCF763; color:#13293D; border-color:#DCF763;">
+          <span style="font-size:12px; color:#3E92CC; letter-spacing:0.1em;">0{{ s.num }}</span>
+          <span>{{ s.name }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="contato" style="position:relative; padding:140px 5vw; display:grid; grid-template-columns:repeat(12,1fr); border-top:1px solid rgba(62,146,204,0.25);">
+    <div style="grid-column:1/13;">
+      
+      <h2 style="margin:0 0 40px; font-size:clamp(40px,9vw,140px); font-weight:900; color:#DCF763; line-height:0.95;">
+        VAMOS<br>CONSTRUIR<br><span style="color:#3E92CC;">ALGO REAL.</span>
+      </h2>
+      <div style="display:flex; flex-wrap:wrap; gap:40px; font-size:16px; margin-top:60px;">
+        <a href="mailto:contato@exemplo.com" style="color:#DCF763; text-decoration:none; border-bottom:1px solid #DCF763; padding-bottom:4px;" onMouseEnter="{{ growCursor }}" onMouseLeave="{{ shrinkCursor }}">contato@exemplo.com</a>
+        <a href="#" style="color:#3E92CC; text-decoration:none; border-bottom:1px solid #3E92CC; padding-bottom:4px;" onMouseEnter="{{ growCursor }}" onMouseLeave="{{ shrinkCursor }}">GitHub</a>
+        <a href="#" style="color:#3E92CC; text-decoration:none; border-bottom:1px solid #3E92CC; padding-bottom:4px;" onMouseEnter="{{ growCursor }}" onMouseLeave="{{ shrinkCursor }}">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <footer style="padding:30px 5vw; display:flex; justify-content:space-between; font-size:12px; color:#3E92CC; opacity:0.6;">
+    <span>© 2026</span>
+    <span>código pensado, não gerado.</span>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const PROJECT_SEED = [
+  { tag: 'EM BREVE', title: 'Projeto 01', desc: 'Descrição do projeto em breve.', stack: 'STACK A DEFINIR', bg: '#DCF763', fg: '#13293D', top: '20px', left: '4%', rot: -4 },
+  { tag: 'EM BREVE', title: 'Projeto 02', desc: 'Descrição do projeto em breve.', stack: 'STACK A DEFINIR', bg: '#3E92CC', fg: '#13293D', top: '120px', left: '32%', rot: 3 },
+  { tag: 'EM BREVE', title: 'Projeto 03', desc: 'Descrição do projeto em breve.', stack: 'STACK A DEFINIR', bg: '#13293D', fg: '#DCF763', top: '20px', left: '60%', rot: -2 },
+  { tag: 'EM BREVE', title: 'Projeto 04', desc: 'Descrição do projeto em breve.', stack: 'STACK A DEFINIR', bg: '#DCF763', fg: '#13293D', top: '260px', left: '18%', rot: 5 },
+];
+
+const SKILLS_SEED = [
+  { name: 'JavaScript', size: '18px', weight: 700, big: '#DCF763' },
+  { name: 'TypeScript', size: '16px', weight: 600, big: '#3E92CC' },
+  { name: 'React', size: '22px', weight: 800, big: '#DCF763' },
+  { name: 'Node.js', size: '15px', weight: 500, big: '#3E92CC' },
+  { name: 'CSS avançado', size: '17px', weight: 600, big: '#DCF763' },
+  { name: 'SQL', size: '15px', weight: 500, big: '#3E92CC' },
+  { name: 'Git', size: '16px', weight: 600, big: '#DCF763' },
+  { name: 'Arquitetura de sistemas', size: '20px', weight: 800, big: '#3E92CC' },
+];
+
+class Component extends DCLogic {
+  state = {
+    cursorX: -100, cursorY: -100, cursorScale: 1,
+    positions: PROJECT_SEED.map(() => ({ x: 0, y: 0 })),
+    dragIdx: null, zTop: 10,
+  };
+
+  onMouseMove = (e) => {
+    const rect = this.stageEl ? this.stageEl.getBoundingClientRect() : { left: 0, top: 0 };
+    this.setState({ cursorX: e.clientX, cursorY: e.clientY });
+    if (this.state.dragIdx !== null) {
+      const { dragIdx, dragStart } = this.state;
+      const positions = this.state.positions.slice();
+      positions[dragIdx] = { x: e.clientX - dragStart.mouseX + dragStart.x, y: e.clientY - dragStart.mouseY + dragStart.y };
+      this.setState({ positions });
+    }
+  };
+
+  growCursor = () => this.setState({ cursorScale: 2.2 });
+  shrinkCursor = () => this.setState({ cursorScale: 1 });
+
+  startDrag(idx, e) {
+    e.preventDefault();
+    const pos = this.state.positions[idx];
+    this.setState({
+      dragIdx: idx,
+      zTop: this.state.zTop + 1,
+      dragStart: { mouseX: e.clientX, mouseY: e.clientY, x: pos.x, y: pos.y },
+    });
+    const up = () => { this.setState({ dragIdx: null }); window.removeEventListener('pointerup', up); };
+    window.addEventListener('pointerup', up);
+  }
+
+  stageRef = (el) => { this.stageEl = el; };
+
+  renderVals() {
+    const positions = this.state.positions;
+    const zTop = this.state.zTop;
+    const projects = PROJECT_SEED.map((p, i) => ({
+      ...p,
+      num: i + 1,
+      x: positions[i].x,
+      y: positions[i].y,
+      z: this.state.dragIdx === i ? zTop + 5 : i + 1,
+      onDown: (e) => this.startDrag(i, e),
+    }));
+
+    return {
+      cursorX: this.state.cursorX,
+      cursorY: this.state.cursorY,
+      cursorScale: this.state.cursorScale,
+      cursorDisplay: this.state.cursorX < 0 ? 'none' : 'block',
+      onMouseMove: this.onMouseMove,
+      growCursor: this.growCursor,
+      shrinkCursor: this.shrinkCursor,
+      stageRef: this.stageRef,
+      projects,
+      skills: SKILLS_SEED.map((s, i) => ({ ...s, num: i + 1 })),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

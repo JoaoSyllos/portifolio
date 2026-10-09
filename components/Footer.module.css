@@ -1,0 +1,8 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px var(--gutter);
+  font-size: 12px;
+  color: var(--blue);
+  opacity: 0.6;
+}

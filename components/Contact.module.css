@@ -1,0 +1,51 @@
+.section { padding-block: 140px; }
+.title {
+  font-size: clamp(40px, 9vw, 140px);
+  font-weight: 900;
+  line-height: 0.95;
+}
+.line { display: block; }
+.accent { color: var(--blue); }
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin: 100px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 16px;
+}
+.link,
+.primary {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding-bottom: 4px;
+  /* sublinhado desenhado como fundo para poder animar */
+  background: linear-gradient(currentColor, currentColor) no-repeat left bottom / 100% 1px;
+  transition: color 0.3s;
+}
+.link { color: var(--blue); }
+.primary { color: var(--lime); }
+.arrow {
+  display: inline-block;
+  transition: transform 0.35s var(--ease-out);
+}
+.link:hover,
+.primary:hover { animation: underline 0.7s var(--ease-in-out); }
+.link:hover { color: var(--lime); }
+.link:hover .arrow,
+.primary:hover .arrow { transform: translate(3px, -3px); }
+
+/* o traço sai pela direita e volta pela esquerda */
+@keyframes underline {
+  0% { background-position: right bottom; background-size: 100% 1px; }
+  45% { background-position: right bottom; background-size: 0 1px; }
+  55% { background-position: left bottom; background-size: 0 1px; }
+  100% { background-position: left bottom; background-size: 100% 1px; }
+}
+
+@media (max-width: 760px) {
+  .section { padding-block: 90px; }
+  .links { gap: 20px 28px; margin-top: 56px; font-size: 14px; }
+}

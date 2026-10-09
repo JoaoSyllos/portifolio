@@ -1,0 +1,20 @@
+.cross {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  /* gira 90° a cada ciclo; como o "+" é simétrico, o loop não tem emenda */
+  animation: tick 6s var(--ease-in-out) infinite;
+}
+.cross::before,
+.cross::after {
+  content: '';
+  position: absolute;
+  background: var(--blue);
+}
+.cross::before { left: 8px; top: 0; width: 2px; height: 18px; }
+.cross::after { top: 8px; left: 0; width: 18px; height: 2px; }
+
+@keyframes tick {
+  0%, 82% { transform: rotate(0); }
+  100% { transform: rotate(90deg); }
+}

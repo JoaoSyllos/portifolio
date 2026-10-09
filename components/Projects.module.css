@@ -1,0 +1,102 @@
+.section { padding-block: 120px 180px; }
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line-strong);
+}
+.item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 60px minmax(0, 1fr) minmax(0, 1.2fr) 56px;
+  gap: 32px;
+  align-items: center;
+  padding: 40px 0;
+  border-bottom: 1px solid var(--line-strong);
+  transition: padding 0.4s var(--ease-out), background 0.4s var(--ease-out);
+}
+/* barra lime que sobe na borda esquerda */
+.item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -1px;
+  bottom: -1px;
+  width: 3px;
+  background: var(--lime);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.4s var(--ease-out);
+}
+.num {
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  color: var(--blue);
+  transition: color 0.3s;
+}
+.name {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 900;
+  line-height: 1;
+}
+.stack {
+  display: block;
+  margin-top: 12px;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  color: var(--blue);
+}
+.desc {
+  font-size: 16px;
+  line-height: 1.6;
+  opacity: 0.85;
+  text-wrap: pretty;
+  transition: opacity 0.3s;
+}
+.arrow {
+  justify-self: end;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  font-size: 24px;
+  transition:
+    background 0.35s var(--ease-out),
+    color 0.35s var(--ease-out),
+    border-color 0.35s var(--ease-out),
+    transform 0.45s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .item:hover {
+    padding-left: 24px;
+    background: rgba(62, 146, 204, 0.08);
+  }
+  .item:hover::before { transform: scaleY(1); }
+  .item:hover .num { color: var(--lime); }
+  .item:hover .desc { opacity: 1; }
+  .item:hover .arrow {
+    background: var(--lime);
+    border-color: var(--lime);
+    color: var(--navy);
+    transform: rotate(45deg);
+  }
+}
+.item:focus-visible { outline-offset: -2px; }
+
+@media (max-width: 760px) {
+  .item {
+    grid-template-columns: 40px minmax(0, 1fr) 40px;
+    gap: 16px 20px;
+  }
+  .desc { grid-column: 2 / 3; grid-row: 2; }
+}
+
+@media (max-width: 760px) {
+  .section { padding-block: 80px 100px; }
+  .item { padding: 28px 0; }
+  .arrow { width: 40px; height: 40px; font-size: 18px; }
+}

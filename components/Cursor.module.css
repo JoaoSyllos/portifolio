@@ -1,0 +1,28 @@
+.cursor {
+  --scale: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.cursor[data-visible='true'] { opacity: 1; }
+.cursor[data-grow='true'] { --scale: 2.2; }
+.cursor[data-press='true'] { --scale: 0.7; }
+.cursor[data-grow='true'][data-press='true'] { --scale: 1.8; }
+.dot {
+  display: block;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--lime);
+  transform: translate(-50%, -50%) scale(var(--scale));
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor { display: none; }
+}
