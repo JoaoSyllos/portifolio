@@ -1,8 +1,8 @@
 .marquee {
   display: flex;
   overflow: hidden;
-  background: var(--lime);
-  color: var(--navy);
+  background: var(--accent);
+  color: var(--bg);
   user-select: none;
 }
 .track {
@@ -26,7 +26,7 @@
 .item::after {
   content: '✦';
   margin-inline: 32px;
-  color: var(--blue);
+  color: var(--secondary);
 }
 
 @keyframes scroll {

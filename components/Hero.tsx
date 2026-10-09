@@ -1,6 +1,6 @@
-import Crosshair from "./Crosshair";
+import Image from "next/image";
 import Spotlight from "./Spotlight";
-import { sections } from "@/data/content";
+import { sections, site } from "@/data/content";
 import { stagger } from "@/lib/motion";
 import styles from "./Hero.module.css";
 
@@ -9,39 +9,40 @@ export default function Hero() {
     <section className={styles.hero}>
       <Spotlight />
 
-      <div className={styles.decor} aria-hidden>
-        <Crosshair style={{ left: "var(--gutter)", bottom: 20 }} />
-        <Crosshair style={{ right: "var(--gutter)", bottom: 20, animationDelay: "-2s" }} />
-        <Crosshair className={styles.crossTop} style={{ right: "var(--gutter)", top: 45, animationDelay: "-4s" }} />
-        <span className={styles.ring} />
-        <span className={styles.build}>BUILD 2026.10</span>
-        <span className={styles.vertical}>ESCRITO À MÃO — LINHA POR LINHA</span>
-      </div>
-
       <div className={styles.main}>
-        <span className={styles.eyebrow}>Desenvolvo</span>
+        <span className={styles.eyebrow}>Design e desenvolvimento web</span>
         <h1 className={styles.title}>
           <span className={styles.line} style={stagger(0)}>
-            <span>CÓDIGO</span>
+            <span>Sites feitos</span>
           </span>{" "}
           <span className={`${styles.line} ${styles.accent}`} style={stagger(1)}>
-            <span>PENSADO,</span>
-          </span>{" "}
-          <span className={styles.line} style={stagger(2)}>
-            <span>
-              NÃO GERADO<span className={styles.caret}>_</span>
-            </span>
+            <span>para vender.</span>
           </span>
         </h1>
       </div>
 
       <div className={styles.aside}>
+        <div className={styles.me}>
+          <Image
+            src={site.photo}
+            alt={`Foto de ${site.name}`}
+            width={1169}
+            height={1345}
+            sizes="72px"
+            priority
+            className={styles.photo}
+          />
+          <p className={styles.name}>
+            {site.name}
+            <span className={styles.role}>Freelancer</span>
+          </p>
+        </div>
         <p className={styles.lead}>
-          Eu escrevo cada linha, desenho a arquitetura e reviso os detalhes
-          antes de publicar.
+          Crio sites sob medida para negócios e profissionais. Você aprova o
+          visual antes de eu programar e recebe o site no ar, no seu domínio.
         </p>
-        <a href={`#${sections.projetos.id}`} className={styles.cta}>
-          Ver projetos
+        <a href={`#${sections.contato.id}`} className={styles.cta}>
+          Pedir orçamento
           <span className={styles.ctaArrow} aria-hidden>
             <span>↓</span>
           </span>

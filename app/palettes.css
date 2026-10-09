@@ -1,0 +1,74 @@
+/* =====================================================================
+   PALETAS DE CORES
+   ---------------------------------------------------------------------
+   Para trocar a paleta do site, mude `palette` em data/theme.ts.
+   Para criar uma nova, copie um bloco abaixo, dê outro nome em
+   data-palette e adicione esse nome à lista em data/theme.ts.
+
+   Cada paleta define só 4 cores; linhas, brilhos e transparências
+   do site inteiro são derivados delas.
+     --bg         fundo principal
+     --bg-deep    fundo alternativo (seções de destaque, um tom mais fundo)
+     --secondary  cor de apoio: números, rótulos, linhas e grades
+     --accent     cor principal: títulos, textos e botões.
+                  Também é o fundo dos botões no hover, com texto em --bg,
+                  então --accent e --bg precisam contrastar bem entre si.
+     --radius     (opcional) arredondamento de botões, cartões e campos; padrão 0
+   ===================================================================== */
+
+/* Oceano — a paleta original: azul-marinho com verde-limão */
+[data-palette='oceano'] {
+  --bg: #13293d;
+  --bg-deep: #0f2131;
+  --secondary: #3e92cc;
+  --accent: #dcf763;
+}
+
+/* Grafite — preto neutro com laranja elétrico */
+[data-palette='grafite'] {
+  --bg: #161616;
+  --bg-deep: #0d0d0d;
+  --secondary: #8b949e;
+  --accent: #ff6b35;
+}
+
+/* Floresta — verde profundo com amarelo-palha */
+[data-palette='floresta'] {
+  --bg: #11251d;
+  --bg-deep: #0b1a14;
+  --secondary: #4fb286;
+  --accent: #f4e285;
+}
+
+/* Ameixa — roxo escuro com verde-menta */
+[data-palette='ameixa'] {
+  --bg: #221432;
+  --bg-deep: #180e24;
+  --secondary: #a487dc;
+  --accent: #7cf5c4;
+}
+
+/* Brasa — marrom quente com areia e terracota */
+[data-palette='brasa'] {
+  --bg: #1c1917;
+  --bg-deep: #141110;
+  --secondary: #e07a5f;
+  --accent: #f2cc8f;
+}
+
+/* Papel — versão clara: creme com tinta preta e detalhes em laranja */
+[data-palette='papel'] {
+  --bg: #f2ede4;
+  --bg-deep: #e7e0d3;
+  --secondary: #c2410c;
+  --accent: #1b1b1b;
+}
+
+/* Claro — branco com tinta azul-marinho e detalhes em azul: o visual mais sóbrio */
+[data-palette='claro'] {
+  --bg: #ffffff;
+  --bg-deep: #f3f6fa;
+  --secondary: #2563eb;
+  --accent: #0f172a;
+  --radius: 10px;
+}

@@ -1,41 +1,86 @@
 .section { padding-block: 140px; }
 .title {
-  font-size: clamp(40px, 9vw, 140px);
-  font-weight: 900;
+  font-size: calc(clamp(40px, 9vw, 140px) * var(--display-scale, 1));
+  font-weight: var(--display-weight, 900);
+  text-transform: var(--display-case, uppercase);
   line-height: 0.95;
 }
 .line { display: block; }
-.accent { color: var(--blue); }
-.links {
+.accent { color: var(--secondary); }
+
+.actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 40px;
-  margin: 100px 0 0;
-  padding: 0;
-  list-style: none;
-  font-size: 16px;
+  align-items: center;
+  gap: 32px 48px;
+  margin-top: 80px;
 }
-.link,
-.primary {
+
+/* ação principal: o único botão preenchido da página */
+.cta {
   display: inline-flex;
-  align-items: baseline;
-  gap: 8px;
-  padding-bottom: 4px;
-  /* sublinhado desenhado como fundo para poder animar */
-  background: linear-gradient(currentColor, currentColor) no-repeat left bottom / 100% 1px;
-  transition: color 0.3s;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 32px;
+  border-radius: var(--radius, 0);
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition:
+    translate 0.3s var(--ease-out),
+    box-shadow 0.3s var(--ease-out),
+    scale 0.15s ease;
 }
-.link { color: var(--blue); }
-.primary { color: var(--lime); }
+.cta:hover,
+.cta:focus-visible {
+  translate: 0 -3px;
+  box-shadow: 0 16px 40px -14px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+.cta:active { scale: 0.97; }
+
 .arrow {
   display: inline-block;
   transition: transform 0.35s var(--ease-out);
 }
-.link:hover,
-.primary:hover { animation: underline 0.7s var(--ease-in-out); }
-.link:hover { color: var(--lime); }
+.cta:hover .arrow,
+.cta:focus-visible .arrow,
 .link:hover .arrow,
-.primary:hover .arrow { transform: translate(3px, -3px); }
+.link:focus-visible .arrow { transform: translate(3px, -3px); }
+
+/* alternativas: e-mail e GitHub, discretas ao lado do botão */
+.alt {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px 24px;
+  font-size: 14px;
+}
+.altLabel { color: var(--secondary); }
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding-bottom: 4px;
+  color: var(--secondary);
+  /* sublinhado desenhado como fundo para poder animar */
+  background: linear-gradient(currentColor, currentColor) no-repeat left bottom / 100% 1px;
+  transition: color 0.3s;
+}
+.link:hover {
+  color: var(--accent);
+  animation: underline 0.7s var(--ease-in-out);
+}
 
 /* o traço sai pela direita e volta pela esquerda */
 @keyframes underline {
@@ -45,7 +90,22 @@
   100% { background-position: left bottom; background-size: 100% 1px; }
 }
 
+/* celular: botão na largura toda, alternativas empilhadas embaixo */
 @media (max-width: 760px) {
   .section { padding-block: 90px; }
-  .links { gap: 20px 28px; margin-top: 56px; font-size: 14px; }
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 28px;
+    margin-top: 48px;
+  }
+  .cta {
+    justify-content: center;
+    padding: 18px 20px;
+    font-size: 13px;
+    text-align: center;
+  }
+  .alt { flex-direction: column; gap: 12px; font-size: 13px; }
+  .links { flex-direction: column; gap: 12px; }
+  .link { overflow-wrap: anywhere; }
 }

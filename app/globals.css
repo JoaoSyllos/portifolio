@@ -1,14 +1,11 @@
 :root {
-  --navy: #13293d;
-  --navy-deep: #0f2131;
-  --blue: #3e92cc;
-  --lime: #dcf763;
-  --line: rgba(62, 146, 204, 0.25);
-  --line-strong: rgba(62, 146, 204, 0.35);
+  /* as cores (--bg, --bg-deep, --secondary, --accent) vêm de app/palettes.css */
+  --line: color-mix(in srgb, var(--secondary) 25%, transparent);
+  --line-strong: color-mix(in srgb, var(--secondary) 35%, transparent);
   /* margem lateral: fluida em telas pequenas, centraliza o conteúdo em 1440px nas grandes */
   --gutter: max(clamp(20px, 5vw, 72px), calc(50vw - 720px));
   --nav-h: 80px;
-  --font-mono: 'SF Mono', 'JetBrains Mono', Consolas, monospace;
+  /* as fontes (--font-display, --font-body) vêm de app/fonts.ts */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 }
@@ -17,22 +14,20 @@
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
-  background: var(--navy);
-  color: var(--lime);
-  font-family: var(--font-mono);
+  background: var(--bg);
+  color: var(--accent);
+  font-family: var(--font-body);
   overflow-x: hidden;
 }
 h1, h2, p { margin: 0; }
+h1, h2, h3 { font-family: var(--font-display); }
 a { color: inherit; text-decoration: none; }
-::selection { background: var(--lime); color: var(--navy); }
+::selection { background: var(--accent); color: var(--bg); }
 :focus-visible {
-  outline: 2px solid var(--lime);
+  outline: 2px solid var(--accent);
   outline-offset: 4px;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  body, a { cursor: none; }
-}
 
 /* Reveal no scroll, só CSS: a animação acompanha a entrada do elemento na tela.
    Sem suporte a animation-timeline o conteúdo simplesmente aparece; nada depende de JS.

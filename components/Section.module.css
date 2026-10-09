@@ -6,8 +6,8 @@
 .title {
   margin-bottom: clamp(32px, 5vw, 60px);
   font-size: clamp(32px, 5vw, 64px);
-  font-weight: 900;
-  text-transform: uppercase;
+  font-weight: var(--display-weight, 900);
+  text-transform: var(--display-case, uppercase);
 }
 .count {
   margin-left: 0.5em;
@@ -15,5 +15,5 @@
   font-weight: 600;
   letter-spacing: 0.15em;
   vertical-align: 1.6em;
-  color: var(--blue);
+  color: var(--secondary);
 }

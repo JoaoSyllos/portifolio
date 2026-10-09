@@ -23,7 +23,7 @@
   top: -1px;
   bottom: -1px;
   width: 3px;
-  background: var(--lime);
+  background: var(--accent);
   transform: scaleY(0);
   transform-origin: bottom;
   transition: transform 0.4s var(--ease-out);
@@ -31,13 +31,13 @@
 .num {
   font-size: 14px;
   letter-spacing: 0.2em;
-  color: var(--blue);
+  color: var(--secondary);
   transition: color 0.3s;
 }
 .name {
   margin: 0;
   font-size: clamp(28px, 4vw, 52px);
-  font-weight: 900;
+  font-weight: var(--display-weight, 900);
   line-height: 1;
 }
 .stack {
@@ -45,7 +45,7 @@
   margin-top: 12px;
   font-size: 12px;
   letter-spacing: 0.15em;
-  color: var(--blue);
+  color: var(--secondary);
 }
 .desc {
   font-size: 16px;
@@ -62,41 +62,78 @@
   height: 56px;
   border: 1px solid var(--line-strong);
   border-radius: 50%;
-  font-size: 24px;
   transition:
     background 0.35s var(--ease-out),
     color 0.35s var(--ease-out),
     border-color 0.35s var(--ease-out),
     transform 0.45s var(--ease-out);
 }
+.arrow svg {
+  width: 22px;
+  height: 22px;
+}
 
 @media (hover: hover) {
+  /* o respiro dos dois lados impede que o círculo encoste na borda do fundo destacado */
   .item:hover {
-    padding-left: 24px;
-    background: rgba(62, 146, 204, 0.08);
+    padding-inline: 24px;
+    background: color-mix(in srgb, var(--secondary) 8%, transparent);
   }
   .item:hover::before { transform: scaleY(1); }
-  .item:hover .num { color: var(--lime); }
+  .item:hover .num { color: var(--accent); }
   .item:hover .desc { opacity: 1; }
   .item:hover .arrow {
-    background: var(--lime);
-    border-color: var(--lime);
-    color: var(--navy);
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
     transform: rotate(45deg);
   }
 }
 .item:focus-visible { outline-offset: -2px; }
 
-@media (max-width: 760px) {
-  .item {
-    grid-template-columns: 40px minmax(0, 1fr) 40px;
-    gap: 16px 20px;
-  }
-  .desc { grid-column: 2 / 3; grid-row: 2; }
-}
-
+/* celular: linha de meta (número · stack · seta) em cima, nome e descrição na largura toda */
 @media (max-width: 760px) {
   .section { padding-block: 80px 100px; }
-  .item { padding: 28px 0; }
-  .arrow { width: 40px; height: 40px; font-size: 18px; }
+  .item {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      'num stack arrow'
+      'name name name'
+      'desc desc desc';
+    gap: 0 14px;
+    padding: 28px 0 32px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .item:active { background: color-mix(in srgb, var(--secondary) 8%, transparent); }
+  .item:active::before { transform: scaleY(1); }
+  .info { display: contents; }
+  .num { grid-area: num; font-size: 12px; }
+  .stack {
+    grid-area: stack;
+    margin: 0;
+    font-size: 11px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .arrow {
+    grid-area: arrow;
+    width: 40px;
+    height: 40px;
+  }
+  .arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+  .name {
+    grid-area: name;
+    margin-top: 14px;
+    font-size: clamp(30px, 9vw, 40px);
+    overflow-wrap: anywhere;
+  }
+  .desc {
+    grid-area: desc;
+    margin-top: 12px;
+    font-size: 15px;
+  }
 }
